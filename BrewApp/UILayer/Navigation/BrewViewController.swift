@@ -11,7 +11,6 @@ import RxSwift
 class BrewViewController: NiblessNavigationController {
     
     // MARK: - Properties
-    // TODO: View Model
     private let disposeBag = DisposeBag()
     
     // Child View Controllers
@@ -31,13 +30,13 @@ class BrewViewController: NiblessNavigationController {
         pushViewController(listViewController, animated: false)
         listViewController.selectedBeer
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [weak self] beer in
-                self?.presentDetails(beer)
+            .subscribe(onNext: { [weak self] viewModel in
+                self?.presentDetails(viewModel)
             }).disposed(by: disposeBag)
     }
     
-    func presentDetails(_ beer: Beer) {
-        let detailsViewController = BrewDetailsViewController(beer: beer)
+    func presentDetails(_ viewModel: BrewDetailsViewModel) {
+        let detailsViewController = BrewDetailsViewController(viewModel: viewModel)
         pushViewController(detailsViewController, animated: true)
     }
 }

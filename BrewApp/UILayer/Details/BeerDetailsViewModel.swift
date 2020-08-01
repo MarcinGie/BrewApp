@@ -17,7 +17,7 @@ struct BrewDetailsViewModel {
         return Section.allCases.count
     }
     
-    var imageURL: String {
+    var imagePath: String {
         return beer.imageURL ?? ""
     }
     
@@ -55,7 +55,7 @@ struct BrewDetailsViewModel {
         }
     }
     
-    func contentFieldFor(_ indexPath: IndexPath) -> BrewContentField? {
+    func fieldFor(_ indexPath: IndexPath) -> BrewContentField? {
         guard let section = Section(rawValue: indexPath.section) else { return nil }
         switch section {
         case .image: return .image

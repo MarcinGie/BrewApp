@@ -11,7 +11,7 @@ import EasyPeasy
 import RxSwift
 
 class BrewListViewController: NiblessViewController {
-    let selectedBeer = PublishSubject<Beer>()
+    let selectedBeer = PublishSubject<BrewDetailsViewModel>()
     
     private let tableView = UITableView()
     private let store: BrewProvider
@@ -33,6 +33,7 @@ class BrewListViewController: NiblessViewController {
         tableView.separatorStyle = .none
         
         bindSelectingBeer()
+        bindErrors()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -54,7 +55,7 @@ class BrewListViewController: NiblessViewController {
                 (row, beer, cell) in
                 let viewModel = BrewListCellViewModel(beer: beer)
                 cell.setup(viewModel: viewModel)
-                }
+            }
             .disposed(by: disposeBag)
         didBindData = true
     }
@@ -62,11 +63,45 @@ class BrewListViewController: NiblessViewController {
     private func bindSelectingBeer() {
         tableView.rx.modelSelected(Beer.self)
             .subscribeOn(MainScheduler.instance)
+            .map { BrewDetailsViewModel(beer: $0) }
             .bind(to: selectedBeer)
             .disposed(by: disposeBag)
     }
     
+    private func bindErrors() {
+        store.errors
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] error in
+                self?.show(error: error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     private func show(error: String) {
-        print(error)
+        let errorLabel = UILabel()
+        errorLabel.lineBreakMode = .byWordWrapping
+        errorLabel.layer.cornerRadius = 5.0
+        errorLabel.clipsToBounds = true
+        errorLabel.numberOfLines = 0
+        errorLabel.alpha = 0
+        errorLabel.backgroundColor = .orange
+        errorLabel.font = .preferredFont(forTextStyle: .headline)
+        errorLabel.textAlignment = .center
+        
+        view.addSubview(errorLabel)
+        errorLabel.easy.layout(Top(100), Left(20), Right(20))
+        
+        errorLabel.text = error
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            errorLabel.alpha = 1.0
+        }) { _ in
+            UIView.animate(withDuration: 0.3, delay: 5.0, options: .curveEaseIn, animations: {
+                errorLabel.alpha = 0.0
+            }, completion: { _ in
+                errorLabel.easy.clear()
+                errorLabel.removeFromSuperview()
+            })
+        }
     }
 }

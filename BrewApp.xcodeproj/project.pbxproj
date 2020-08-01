@@ -34,6 +34,8 @@
 		D34700E324A7D16500E3247C /* ContentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34700E224A7D16500E3247C /* ContentStyle.swift */; };
 		D34700E724A7DB0A00E3247C /* BrewListCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34700E624A7DB0A00E3247C /* BrewListCellViewModelTests.swift */; };
 		D34700E924A7DFFB00E3247C /* BeerMock.json in Resources */ = {isa = PBXBuildFile; fileRef = D34700E824A7DFFB00E3247C /* BeerMock.json */; };
+		D34700EB24A805F200E3247C /* BrewDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34700EA24A805F200E3247C /* BrewDetailsViewModel.swift */; };
+		D34F67F824A80F34005187CA /* BrewDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34F67F724A80F34005187CA /* BrewDetailsViewModelTests.swift */; };
 		D398AF4024A683940010A089 /* BrewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D398AF3F24A683940010A089 /* BrewImageCell.swift */; };
 		D398AF4224A691550010A089 /* BrewContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D398AF4124A691550010A089 /* BrewContentCell.swift */; };
 		D3C7BB4B24A5F56500E4475E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C7BB4A24A5F56500E4475E /* AppDelegate.swift */; };
@@ -90,6 +92,8 @@
 		D34700E224A7D16500E3247C /* ContentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentStyle.swift; sourceTree = "<group>"; };
 		D34700E624A7DB0A00E3247C /* BrewListCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewListCellViewModelTests.swift; sourceTree = "<group>"; };
 		D34700E824A7DFFB00E3247C /* BeerMock.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BeerMock.json; sourceTree = "<group>"; };
+		D34700EA24A805F200E3247C /* BrewDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewDetailsViewModel.swift; sourceTree = "<group>"; };
+		D34F67F724A80F34005187CA /* BrewDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		D398AF3F24A683940010A089 /* BrewImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewImageCell.swift; sourceTree = "<group>"; };
 		D398AF4124A691550010A089 /* BrewContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrewContentCell.swift; sourceTree = "<group>"; };
 		D3C7BB4724A5F56500E4475E /* BrewApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrewApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -222,10 +226,11 @@
 		D34700CE24A6115800E3247C /* Details */ = {
 			isa = PBXGroup;
 			children = (
-				D323CC4524A639E500D096A1 /* BrewDetailsViewController.swift */,
-				D398AF3F24A683940010A089 /* BrewImageCell.swift */,
 				D398AF4124A691550010A089 /* BrewContentCell.swift */,
 				D34700E024A7D11200E3247C /* BrewContentCellViewModel.swift */,
+				D323CC4524A639E500D096A1 /* BrewDetailsViewController.swift */,
+				D34700EA24A805F200E3247C /* BrewDetailsViewModel.swift */,
+				D398AF3F24A683940010A089 /* BrewImageCell.swift */,
 				D34700E224A7D16500E3247C /* ContentStyle.swift */,
 			);
 			path = Details;
@@ -261,6 +266,7 @@
 		D34700E424A7DAE700E3247C /* UILayer */ = {
 			isa = PBXGroup;
 			children = (
+				D34F67F624A80F1A005187CA /* Details */,
 				D34700E524A7DAF100E3247C /* List */,
 			);
 			path = UILayer;
@@ -272,6 +278,14 @@
 				D34700E624A7DB0A00E3247C /* BrewListCellViewModelTests.swift */,
 			);
 			path = List;
+			sourceTree = "<group>";
+		};
+		D34F67F624A80F1A005187CA /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				D34F67F724A80F34005187CA /* BrewDetailsViewModelTests.swift */,
+			);
+			path = Details;
 			sourceTree = "<group>";
 		};
 		D3C7BB3E24A5F56500E4475E = {
@@ -561,6 +575,7 @@
 				D3C7BB7F24A5FD5400E4475E /* SceneDelegate.swift in Sources */,
 				D323CC4824A6668800D096A1 /* Amount.swift in Sources */,
 				D34700E324A7D16500E3247C /* ContentStyle.swift in Sources */,
+				D34700EB24A805F200E3247C /* BrewDetailsViewModel.swift in Sources */,
 				D34700CC24A60F3900E3247C /* BrewListViewController.swift in Sources */,
 				D323CC5224A679AC00D096A1 /* Method.swift in Sources */,
 				D323111E24A61F5A0028CE01 /* APIClient.swift in Sources */,
@@ -576,6 +591,7 @@
 				D34700DE24A7ABC000E3247C /* BrewFileProvider.swift in Sources */,
 				D3C7BB6524A5F56900E4475E /* BrewStoreTests.swift in Sources */,
 				D34700D524A7A74500E3247C /* MockAPIClient.swift in Sources */,
+				D34F67F824A80F34005187CA /* BrewDetailsViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,13 +6,14 @@
 //  Copyright © 2020 Marcin. All rights reserved.
 //
 
-enum BrewContentField {
-    case abv, description, hop(index: Int), malt(index: Int), method(index: Int)
+enum BrewContentField: Equatable {
+    case image, abv, description, hop(index: Int), malt(index: Int), method(index: Int)
 }
 
 struct BrewContentCellViewModel {
     var label: String {
         switch field {
+        case .image: return ""
         case .abv: return "ABV: \(beer.abv)"
         case .description: return "\(beer.description)"
         case let .hop(index):

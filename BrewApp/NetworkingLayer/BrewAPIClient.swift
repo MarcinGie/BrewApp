@@ -26,8 +26,4 @@ class BrewAPIClient: APIClient {
             }
         }.resume()
     }
-    
-    func perform(request: BrewRequest) {
-        URLSession.rx.data(<#T##self: Reactive<URLSession>##Reactive<URLSession>#>)
-    }
 }

@@ -10,31 +10,17 @@ import UIKit
 import EasyPeasy
 
 class BrewDetailsViewController: NiblessViewController {
-    private enum Section: Int, CaseIterable {
-        case image, abv, description, hops, malts, methods
-        var label: String? {
-            switch self {
-            case .abv: return "ABV"
-            case .description: return "DESCRIPTION"
-            case .hops: return "HOPS"
-            case .malts: return "MALTS"
-            case .methods: return "METHODS"
-            default: return nil
-            }
-        }
-    }
-    
-    private let beer: Beer
+    private let viewModel: BrewDetailsViewModel
     private let tableView: UITableView
     
-    init(beer: Beer) {
+    init(viewModel: BrewDetailsViewModel) {
         tableView = UITableView()
-        self.beer = beer
+        self.viewModel = viewModel
         super.init()
     }
     
     override func viewDidLoad() {
-        title = beer.name
+        title = viewModel.title
         
         view.addSubview(tableView)
         tableView.easy.layout(Edges())
@@ -48,49 +34,27 @@ class BrewDetailsViewController: NiblessViewController {
 
 extension BrewDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let section = Section(rawValue: section) else { return 0 }
-        switch section {
-        case .hops:
-            return beer.ingredients.hops.count
-        case .malts:
-            return beer.ingredients.malt.count
-        case .methods:
-            return beer.method.mashTemp.count + 2
-        default:
-            return 1
-        }
+        return viewModel.numberOfRows(inSection: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let section = Section(rawValue: indexPath.section) else { return UITableViewCell() }
-        var field: BrewContentField?
-        switch section {
-        case .image:
-            return getImageCell(indexPath)
-        case .abv:
-            field = .abv
-        case .description:
-            field = .description
-        case .hops:
-            field = .hop(index: indexPath.row)
-        case .malts:
-            field = .malt(index: indexPath.row)
-        case .methods:
-            field = .method(index: indexPath.row)
-        }
+        let field = viewModel.contentFieldFor(indexPath)
+        
+        guard field != .image else { return getImageCell(indexPath) }
+
         guard let selectedField = field, let cell = tableView.dequeueReusableCell(withIdentifier: BrewContentCell.reuseIdentifier, for: indexPath) as? BrewContentCell else { return UITableViewCell() }
-        let viewModel = BrewContentCellViewModel(beer: beer, field: selectedField)
-        cell.setup(viewModel: viewModel)
+        
+        let contentViewModel = viewModel.contentViewModelFor(selectedField: selectedField)
+        cell.setup(viewModel: contentViewModel)
         return cell
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return Section.allCases.count
+    func numberOfSections(in _: UITableView) -> Int {
+        return viewModel.numberOfSections
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let section = Section(rawValue: section) else { return nil }
-        return section.label
+        return viewModel.titleForHeaderInSection(section)
     }
 }
 
@@ -100,7 +64,7 @@ extension BrewDetailsViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BrewImageCell.reuseIdentifier, for: indexPath) as? BrewImageCell else {
             return UITableViewCell()
         }
-        cell.setup(imageURL: beer.imageURL ?? "")
+        cell.setup(imageURL: viewModel.imageURL)
         return cell
     }
 }
